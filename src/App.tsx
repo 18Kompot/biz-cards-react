@@ -21,10 +21,10 @@ interface ILoginData {
 }
 
 interface Context {
-  userName: string;
+  // userName: string;
   handleLogout: Function;
   login: Function;
-  isAdmin: boolean;
+  // isAdmin: boolean;
 }
 
 export const AppContext = createContext<Context | null>(null);

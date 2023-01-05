@@ -16,13 +16,14 @@ module.exports = {
 
       if (error) {
         console.log(error.details[0].message);
-        throw "Unauthorized";
+        throw Object.assign(new Error("Unauthorized"), { code: 402 });
       }
 
       const user = await User.findOne({ email: value.email });
       if (!user) throw Error;
       const validPassword = await bcrypt.compare(value.password, user.password);
-      if (!validPassword) throw "Invalid password";
+      if (!validPassword)
+        throw Object.assign(new Error("Invalid password"), { code: 402 });
 
       const param = { email: value.email };
       const token = jwt.sign(param, config.jwt_token, { expiresIn: "72800s" });
@@ -55,7 +56,7 @@ module.exports = {
 
       if (error) {
         console.log(error.details[0].message);
-        throw "error sign up new user";
+        throw Object.assign(new Error("Error sign up new user"), { code: 402 });
       }
 
       const user = await User.findOne({ email: value.email });
@@ -97,11 +98,16 @@ module.exports = {
 
       if (error) {
         console.log(error.details[0].message);
-        throw "error get details";
+        throw Object.assign(new Error("Error to get the details"), {
+          code: 402,
+        });
       }
 
       const user = await User.findById(value.id);
-      if (!user) throw "Invalid user id, no such user.";
+      if (!user)
+        throw Object.assign(new Error("Invalid user ID, no such User"), {
+          code: 402,
+        });
 
       res.json({
         id: user._id,
