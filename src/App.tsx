@@ -13,7 +13,8 @@ import MyFavCards from "./pages/MyFavCards";
 import RouteGuard from "./auth/RouteGuard";
 import { setToken } from "./auth/tokenMgmt";
 import { postRequest } from "./services/apiService";
-import { createContext } from "react";
+import { createContext, useState } from "react";
+import CreateCard from "./auth/CreateCard";
 
 interface ILoginData {
   email: string;
@@ -21,19 +22,23 @@ interface ILoginData {
 }
 
 interface Context {
-  // userName: string;
+  userName: string;
   handleLogout: Function;
   login: Function;
-  // isAdmin: boolean;
+  isBiz: boolean;
 }
 
 export const AppContext = createContext<Context | null>(null);
 
 function App() {
+  const [userName, setUserName] = useState<string>("");
+  const [isBiz, setIsBiz] = useState<boolean>(false);
   const navigate = useNavigate();
 
   function handleLogout() {
     localStorage.clear();
+    setUserName("");
+    setIsBiz(false);
     navigate("/login");
   }
 
@@ -45,13 +50,15 @@ function App() {
       .then((response) => response.json())
       .then((json) => {
         setToken(json.token);
-        navigate("/vacations");
+        setIsBiz(json.isBiz);
+        setUserName(json.name);
+        navigate("/mycards");
       });
   }
 
   return (
     <div className="container">
-      <AppContext.Provider value={{ handleLogout, login }}>
+      <AppContext.Provider value={{ userName, handleLogout, login, isBiz }}>
         <Header />
         <ToastContainer />
         <Routes>
@@ -67,8 +74,9 @@ function App() {
           <Route path="/mycards" element={<MyCards />} />
           <Route path="/myfavcards" element={<MyFavCards />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/login" element={<Login handler={Login} />} />
+          <Route path="/login" element={<Login handler={login} />} />
           <Route path="/biz" element={<Business />} />
+          <Route path="/createcard" element={<CreateCard />} />
         </Routes>
         <footer>
           <Footer />

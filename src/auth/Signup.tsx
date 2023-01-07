@@ -74,7 +74,7 @@ function Signup() {
         sub="You can open a new account for free!"
       />
 
-      <form>
+      <div>
         <div className="form-group">
           <label>Email address</label>
           <input
@@ -108,7 +108,7 @@ function Signup() {
         <button onClick={submit} className="btn btn-primary mt-2">
           Sign up
         </button>
-      </form>
+      </div>
     </>
   );
 }

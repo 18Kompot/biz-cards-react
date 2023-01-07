@@ -16,7 +16,7 @@ function Business() {
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
-            placeholder="Enter email"
+            placeholder="Email"
           />
         </div>
         <div className="form-group mt-2">

@@ -33,7 +33,7 @@ module.exports = {
         id: user._id,
         email: user.email,
         name: user.name,
-        // isBiz: user.isBiz,
+        isBiz: user.isBiz,
         // isAdmin: user.isAdmin
       });
     } catch (err) {
@@ -49,7 +49,7 @@ module.exports = {
         email: joi.string().min(6).max(256).required().email(),
         password: joi.string().min(6).max(1024).required(),
         name: joi.string().required().min(2).max(256),
-        // isBiz: joi.boolean().required(),
+        isBiz: joi.boolean().required(),
       });
 
       const { error, value } = schema.validate(req.body);
@@ -70,7 +70,7 @@ module.exports = {
         email: value.email,
         password: hash,
         name: value.name,
-        // isBiz: value.isBiz,
+        isBiz: value.isBiz,
       });
 
       await newUser.save();
@@ -79,7 +79,7 @@ module.exports = {
         id: newUser._id,
         name: newUser.name,
         email: newUser.email,
-        // isBiz: newUser.isBiz,
+        isBiz: newUser.isBiz,
         // isAdmin: newUser.isAdmin,
       });
     } catch (err) {
@@ -113,7 +113,7 @@ module.exports = {
         id: user._id,
         email: user.email,
         name: user.name,
-        // isBiz: user.isBiz,
+        isBiz: user.isBiz,
         // isAdmin: user.isAdmin,
       });
     } catch (err) {
