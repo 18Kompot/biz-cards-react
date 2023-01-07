@@ -49,7 +49,7 @@ module.exports = {
         email: joi.string().min(6).max(256).required().email(),
         password: joi.string().min(6).max(1024).required(),
         name: joi.string().required().min(2).max(256),
-        isBiz: joi.boolean().required(),
+        isBiz: joi.boolean(),
       });
 
       const { error, value } = schema.validate(req.body);

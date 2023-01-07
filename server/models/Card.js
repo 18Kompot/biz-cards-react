@@ -13,12 +13,6 @@ const cardSchema = new mongoose.Schema({
         minlength: 2,
         maxlength: 256,
     },
-    description: {
-        type: String,
-        required: true,
-        minlength: 2,
-        maxlength: 1024,
-    },
     address: {
         type: String,
         required: true,
@@ -38,7 +32,7 @@ const cardSchema = new mongoose.Schema({
             minlength: 2,
             maxlength: 1024,
         },
-        alt: { type: String, required: true, minlength: 2, maxlength: 256 },
+        alt: { type: String, required: false, minlength: 2, maxlength: 256 },
     },
     bizNumber: {
         type: String,

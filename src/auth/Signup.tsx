@@ -16,6 +16,7 @@ function Signup() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [name, setName] = useState<string>("");
+  const [isBiz, setIsBiz] = useState(false);
 
   //todo: create an error componenet for this:
   //const [error, setError] = useState<string>("")
@@ -29,12 +30,14 @@ function Signup() {
         .email({ tlds: { allow: false } }),
       password: Joi.string().required().min(6).max(30),
       name: Joi.string().required().min(2).max(256),
+      isBiz: Joi.boolean()
     });
 
     const { error, value } = schema.validate({
       email,
       password,
       name,
+      isBiz,
     });
 
     if (error) {
@@ -103,6 +106,15 @@ function Signup() {
             placeholder="Name"
             value={name}
             onChange={(e) => setName(e.target.value)}
+          />
+        </div>
+        <div className="form-group mt-2">
+          <label>Are you a business?</label>
+          <input
+            type="checkbox"
+            className="form-control form-check-input"
+            onChange={(e) => setIsBiz(e.target.checked)}
+            //checked
           />
         </div>
         <button onClick={submit} className="btn btn-primary mt-2">

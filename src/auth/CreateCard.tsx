@@ -15,33 +15,34 @@ interface ICardData {
 
 function CreateCard() {
   const navigate = useNavigate();
-  const [name, setName] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [subTitle, setSubTitle] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
-  const [image, setImage] = useState<string>("");
+  const [url, setImageUrl] = useState<string>("");
 
   //todo: create an error componenet for this:
   //const [error, setError] = useState<string>("")
 
   function submit() {
     const schema = Joi.object().keys({
-      name: Joi.string().min(2).max(256).required(),
-      description: Joi.string().min(2).max(1024).required(),
+      title: Joi.string().min(2).max(256).required(),
+      subTitle: Joi.string().min(2).max(1024).required(),
       address: Joi.string().min(2).max(256).required(),
       phone: Joi.string().min(9).max(14).required(),
-      image: Joi.string().min(6).max(1024),
+      url: Joi.string().min(6).max(1024),
     });
 
     const { error, value } = schema.validate({
-      name,
-      description,
+      title,
+      subTitle,
       address,
       phone,
-      image,
+      url,
     });
 
     if (error) {
+      console.log("We're in an error.");
       //   setError(error.message);
       console.log(error.message);
       return;
@@ -85,8 +86,8 @@ function CreateCard() {
             type="text"
             className="form-control"
             placeholder="Name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </div>
         <div className="form-group mt-2">
@@ -95,8 +96,8 @@ function CreateCard() {
             type="text"
             className="form-control"
             placeholder="Description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            value={subTitle}
+            onChange={(e) => setSubTitle(e.target.value)}
           />
         </div>
         <div className="form-group mt-2">
@@ -125,8 +126,8 @@ function CreateCard() {
             type="text"
             className="form-control"
             placeholder="Image"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
+            value={url}
+            onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
         <button onClick={submit} className="btn btn-primary mt-2">

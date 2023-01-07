@@ -20,11 +20,11 @@ const userSchema = new mongoose.Schema({
     minlength: 2,
     maxlength: 256,
   },
-  // isBiz: {
-  //     type: Boolean,
-  //     default: false,
-  //     required: true,
-  // },
+  isBiz: {
+    type: Boolean,
+    default: false,
+    required: true,
+  },
   // isAdmin: {
   //     type: Boolean,
   //     default: false,
