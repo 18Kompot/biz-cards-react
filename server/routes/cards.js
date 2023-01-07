@@ -6,8 +6,8 @@ router.get('/', cards.list);
 router.get('/:id', cards.details);
 router.get('/user/:id', cards.userCards);
 
-router.post('/', cards.addNew);
+router.post('/', cards.add);
 router.put('/:id', cards.updateDetails);
-router.delete('/:id', cards.deleteCard);
+router.delete('/:id', cards.delete);
 
 module.exports = router;
