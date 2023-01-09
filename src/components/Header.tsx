@@ -55,11 +55,6 @@ function Header() {
                       Login
                     </NavLink>
                   </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-item nav-link" to="/biz">
-                      Business
-                    </NavLink>
-                  </li>
                 </>
               )}
               {isLoggedIn && (
@@ -72,6 +67,11 @@ function Header() {
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/myfavcards">
                       My Favorite Cards
+                    </NavLink>
+                  </li>
+                  <li className="nav-item">
+                    <NavLink className="nav-item nav-link" to="/createcard">
+                      Create Card
                     </NavLink>
                   </li>
                   <li className="nav-item">

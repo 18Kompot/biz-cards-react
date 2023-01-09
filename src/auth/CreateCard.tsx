@@ -5,12 +5,12 @@ import { toast } from "react-toastify";
 import Title from "../components/Title";
 import { postRequest } from "../services/apiService";
 
-interface ICardData {
-  name: string;
-  description: string;
+export interface ICardData {
+  title: string;
+  subTitle: string;
   address: string;
   phone: string;
-  image: string;
+  url: string;
 }
 
 function CreateCard() {

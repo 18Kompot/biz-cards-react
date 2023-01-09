@@ -1,15 +1,14 @@
 import { Route, Routes, useNavigate } from "react-router-dom";
 import "./App.css";
-import Business from "./auth/Business";
 import Login from "./auth/Login";
 import { ToastContainer } from "react-toastify";
 import Signup from "./auth/Signup";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import About from "./pages/About";
-import BizCards from "./pages/BizCards";
-import MyCards from "./pages/MyCards";
-import MyFavCards from "./pages/MyFavCards";
+import BizCards from "./pages/Cards/BizCards";
+import MyCards from "./pages/Cards/MyCards";
+import MyFavCards from "./pages/Cards/MyFavCards";
 import RouteGuard from "./auth/RouteGuard";
 import { setToken } from "./auth/tokenMgmt";
 import { postRequest } from "./services/apiService";
@@ -75,7 +74,6 @@ function App() {
           <Route path="/myfavcards" element={<MyFavCards />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login handler={login} />} />
-          <Route path="/biz" element={<Business />} />
           <Route path="/createcard" element={<CreateCard />} />
         </Routes>
         <footer>
