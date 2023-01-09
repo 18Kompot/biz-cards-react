@@ -29,7 +29,7 @@ module.exports = {
       logError(err);
       result
         .status(400)
-        .json({ error: "Server error: failed to retrieve all cards." });
+        .json({ error: `${err}` });
     }
   },
 
@@ -60,7 +60,7 @@ module.exports = {
       result.json(card);
     } catch (err) {
       logError(err);
-      result.status(400).json({ error: err });
+      result.status(400).json({ error: `${err}` });
     }
   },
 
@@ -92,7 +92,7 @@ module.exports = {
       result.json(cards);
     } catch (err) {
       logError(err);
-      result.status(400).json({ error: err });
+      result.status(400).json({ error: `${err}` });
     }
   },
 
@@ -104,11 +104,11 @@ module.exports = {
   // ====================================================================== //
   add: async function (request, result, next) {
     try {
-      console.log(request.token.email);
-      const user = await User.find({ email: request.token.email });
+      const user = await User.findOne({ email: request.token.email });
       if (!user) {
         throw new Error("User doesn't exist");
       }
+
       if (!user.isBiz) {
         throw new Error("User is not a business.");
       }
@@ -190,7 +190,7 @@ module.exports = {
       result.json(card);
     } catch (err) {
       logError(err);
-      result.status(400).json({ error: err });
+      result.status(400).json({ error: `${err}` });
     }
   },
 
