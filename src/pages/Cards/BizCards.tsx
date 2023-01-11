@@ -1,8 +1,21 @@
 import Search from "../../components/Search";
 import Title from "../../components/Title";
-import { ICardData } from "../../auth/CreateCard";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import { getRequest } from "../../services/apiService";
+import { AppContext } from "../../App";
+
+// Card data as returned by the server.
+export interface ICardData {
+  _id: string,
+  title: string,
+  subTitle: string,
+  address: string,
+  phone: string,
+  image: { url: string, alt: string },
+  bizNumber: string,
+  createdAt: Date,
+  user_id: string
+}
 
 interface Context {
   cards?: Array<ICardData>;
@@ -11,6 +24,11 @@ interface Context {
 export const CardsContext = createContext<Context>({});
 
 function BizCards() {
+  const context = useContext(AppContext);
+
+  // The user ID from the logged in user.
+  const userId  = (context && context.userId.length > 0) ? context.userId : "0";
+  
   const [cards, setCards] = useState<Array<ICardData>>([]);
 
   function getCards() {
@@ -44,14 +62,16 @@ function BizCards() {
                 <li className="list-group-item">Address: {card.address}</li>
                 <li className="list-group-item">Phone: {card.phone}</li>
               </ul>
-              <div className="card-body">
-                <a href="/#" className="card-link">
-                  Delete
-                </a>
-                <a href="/#" className="card-link">
-                  Edit
-                </a>
-              </div>
+              { card.user_id == userId && (
+                <div className="card-body">
+                  <a href="/#" className="card-link">
+                    Delete
+                  </a>
+                  <a href="/#" className="card-link">
+                    Edit
+                  </a>
+                </div>
+              )}
             </div>
           ))}
         </>

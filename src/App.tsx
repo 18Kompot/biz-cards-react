@@ -21,6 +21,7 @@ interface ILoginData {
 }
 
 interface Context {
+  userId: string;
   userName: string;
   handleLogout: Function;
   login: Function;
@@ -30,12 +31,14 @@ interface Context {
 export const AppContext = createContext<Context | null>(null);
 
 function App() {
+  const [userId, setUserId] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
   const [isBiz, setIsBiz] = useState<boolean>(false);
   const navigate = useNavigate();
 
   function handleLogout() {
     localStorage.clear();
+    setUserId("");
     setUserName("");
     setIsBiz(false);
     navigate("/login");
@@ -50,6 +53,7 @@ function App() {
       .then((json) => {
         setToken(json.token);
         setIsBiz(json.isBiz);
+        setUserId(json.id);
         setUserName(json.name);
         navigate("/mycards");
       });
@@ -57,7 +61,7 @@ function App() {
 
   return (
     <div className="container">
-      <AppContext.Provider value={{ userName, handleLogout, login, isBiz }}>
+      <AppContext.Provider value={{ userId, userName, handleLogout, login, isBiz }}>
         <Header />
         <ToastContainer />
         <Routes>

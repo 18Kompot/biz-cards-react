@@ -18,7 +18,7 @@ import { postRequest } from "../services/apiService";
 // bizNumber: Math.floor(Math.random() * 10000000),
 // user_id: user._id,
 
-export interface ICardData {
+export interface IFormCardData {
   _id: number;
   title: string;
   subTitle: string;
@@ -64,7 +64,7 @@ function CreateCard() {
     makeCard(value);
   }
 
-  function makeCard(data: ICardData) {
+  function makeCard(data: IFormCardData) {
     const res = postRequest("cards", data, false);
     if (!res) return;
     res
