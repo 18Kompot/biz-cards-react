@@ -27,9 +27,7 @@ module.exports = {
       result.json(dataSet);
     } catch (err) {
       logError(err);
-      result
-        .status(400)
-        .json({ error: `${err}` });
+      result.status(400).json({ error: `${err}` });
     }
   },
 

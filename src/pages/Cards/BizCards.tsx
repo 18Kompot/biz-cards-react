@@ -29,8 +29,32 @@ function BizCards() {
     <CardsContext.Provider value={{ cards }}>
       <Title main="Business Card App" sub="Here you will find business cards" />
       <Search />
-      {cards.length === 0 && (
+      {cards.length === 0 ? (
         <div className="alert alert-info m-5">No cards</div>
+      ) : (
+        <>
+          {cards.map((card) => (
+            <div key={card._id} className="card col-3">
+              <img src={card.url} className="card-img-top" alt="testimage" />
+              <div className="card-body">
+                <h5 className="card-title">{card.title}</h5>
+                <p className="card-text">Description: {card.subTitle}</p>
+              </div>
+              <ul className="list-group list-group-flush">
+                <li className="list-group-item">Address: {card.address}</li>
+                <li className="list-group-item">Phone: {card.phone}</li>
+              </ul>
+              <div className="card-body">
+                <a href="/#" className="card-link">
+                  Delete
+                </a>
+                <a href="/#" className="card-link">
+                  Edit
+                </a>
+              </div>
+            </div>
+          ))}
+        </>
       )}
     </CardsContext.Provider>
   );
