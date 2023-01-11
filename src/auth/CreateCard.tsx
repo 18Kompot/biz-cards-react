@@ -24,7 +24,7 @@ export interface ICardData {
   subTitle: string;
   address: string;
   phone: string;
-  url: string;
+  image: { url: string, alt: string }
 }
 
 function CreateCard() {

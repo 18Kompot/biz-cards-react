@@ -35,7 +35,7 @@ function BizCards() {
         <>
           {cards.map((card) => (
             <div key={card._id} className="card col-3">
-              <img src={card.url} className="card-img-top" alt="testimage" />
+              <img src={card.image.url} className="card-img-top" alt={ card.image.alt } />
               <div className="card-body">
                 <h5 className="card-title">{card.title}</h5>
                 <p className="card-text">Description: {card.subTitle}</p>
