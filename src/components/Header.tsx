@@ -7,6 +7,7 @@ import User from "./User";
 function Header() {
   const context = useContext(AppContext);
   const isLoggedIn = context && context.userName.length > 0;
+  const isBusiness = context && context.isBiz ? context.isBiz : false;
 
   return (
     <header>
@@ -59,11 +60,13 @@ function Header() {
               )}
               {isLoggedIn && (
                 <>
-                  <li className="nav-item">
-                    <NavLink className="nav-link" to="/mycards">
-                      My Cards
-                    </NavLink>
-                  </li>
+                  {isBusiness ? (
+                    <li className="nav-item">
+                      <NavLink className="nav-link" to="/mycards">
+                        My Cards
+                      </NavLink>
+                    </li>
+                  ) : (<></>)}
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/myfavcards">
                       My Favorite Cards

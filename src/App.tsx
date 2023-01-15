@@ -56,7 +56,7 @@ function App() {
         setIsBiz(json.isBiz);
         setUserId(json.id);
         setUserName(json.name);
-        navigate("/mycards");
+        navigate(json.isBiz ? "/mycards" : "/bizcards");
       });
   }
 
@@ -72,12 +72,7 @@ function App() {
             path="/bizcards"
             element={
               <RouteGuard>
-                <BizCards
-                  userCards={false}
-                  title={"Business Card App"}
-                  subTitle={"Here you will find business cards"}
-                  includeSearch={true}
-                />
+                <BizCards />
               </RouteGuard>
             }
           />

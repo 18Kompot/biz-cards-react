@@ -1,4 +1,9 @@
-function Search() {
+
+interface Props {
+  handleSearch: Function;
+}
+
+function Search(props: Props) {
   return (
     <nav className="navbar bg-body-tertiary">
       <form className="container-fluid">
@@ -6,6 +11,9 @@ function Search() {
           {" "}
           <input
             type="text"
+            onChange={(e) => {
+              props.handleSearch(e.target.value)
+            }}
             className="form-control"
             placeholder="Enter business name or number"
             aria-label="Search"
