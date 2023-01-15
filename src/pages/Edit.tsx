@@ -1,36 +1,40 @@
 import Joi from "joi";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
-import Title from "../components/Title";
-import { IFormCardData } from "../pages/types";
-import { postRequest } from "../services/apiService";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getRequest, patchRequest } from "../services/apiService";
+import { IFormCardData } from "./types";
 
-// title: value.title,
-// subTitle: value.subTitle,
-// address: value.address,
-// phone: value.phone,
-// image: {
-//   url: value.url
-//     ? value.url
-//     : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-//   alt: value.alt ? value.alt : "Pic of Business Card",
-// },
-// bizNumber: Math.floor(Math.random() * 10000000),
-// user_id: user._id,
-
-function CreateCard() {
+function Edit() {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [title, setTitle] = useState<string>("");
   const [subTitle, setSubTitle] = useState<string>("");
   const [address, setAddress] = useState<string>("");
   const [phone, setPhone] = useState<string>("");
   const [url, setImageUrl] = useState<string>("");
+  const [error, setError] = useState<string>("");
 
-  //todo: create an error componenet for this:
-  //const [error, setError] = useState<string>("")
+  useEffect(() => {
+    const res = getRequest(`cards/${id}`);
+    if (!res) return;
 
-  function submit() {
+    res
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.ok === false) {
+          setError("error get the data");
+          return;
+        }
+
+        setTitle(json.title);
+        setSubTitle(json.subTitle);
+        setAddress(json.address);
+        setPhone(json.phone);
+        setImageUrl(json.image.url);
+      });
+  }, [id]);
+
+  function handleClick() {
     const schema = Joi.object().keys({
       title: Joi.string().min(2).max(256).required(),
       subTitle: Joi.string().min(2).max(1024).required(),
@@ -48,43 +52,32 @@ function CreateCard() {
     });
 
     if (error) {
-      console.log("We're in an error.");
-      //   setError(error.message);
-      console.log(error.message);
+      setError(error.message);
       return;
     }
-    makeCard(value);
+
+    setError("");
+    editCard(value);
   }
 
-  function makeCard(data: IFormCardData) {
-    const res = postRequest("cards", data, false);
+  function editCard(card: IFormCardData) {
+    const res = patchRequest(`cards/${id}`, card);
     if (!res) return;
+
     res
-      .then((response) => response.json())
+      .then((res) => res.json())
       .then((json) => {
         if (json.error) {
-          toast.error(json.error, {
-            position: "top-center",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "dark",
-          });
+          setError(json.error);
           return;
         }
+
         navigate("/bizcards");
       });
   }
+
   return (
     <>
-      <Title
-        main="Business registration form"
-        sub="Create your business card!"
-      />
-
       <div>
         <div className="form-group">
           <label>Business Name:</label>
@@ -136,12 +129,19 @@ function CreateCard() {
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
-        <button onClick={submit} className="btn btn-primary mt-2">
-          Create Card
+
+        <button onClick={handleClick} className="btn btn-info me-3">
+          Update
         </button>
+
+        <Link to="/bizcards" className="btn btn-secondary">
+          Cancel
+        </Link>
       </div>
+
+      {error && <div className="text-danger">{error}</div>}
     </>
   );
 }
 
-export default CreateCard;
+export default Edit;

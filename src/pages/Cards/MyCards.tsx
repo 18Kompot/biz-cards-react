@@ -1,9 +1,14 @@
-import Title from "../../components/Title";
+import BizCards from "./BizCards";
 
 function MyCards() {
   return (
     <>
-      <Title main="Your Cards List" sub="Here you can view your cards list" />
+      <BizCards
+        userCards={true}
+        title={"Your Cards List"}
+        subTitle={"Here you can view your cards list"}
+        includeSearch={false}
+      />
     </>
   );
 }

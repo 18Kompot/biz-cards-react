@@ -131,10 +131,10 @@ module.exports = {
         address: value.address,
         phone: value.phone,
         image: {
-          url: value.image.url
-            ? value.image.url
+          url: value.url
+            ? value.url
             : "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-          alt: value.image.alt ? value.image.alt : "Pic of Business Card",
+          alt: value.alt ? value.alt : "Pic of Business Card",
         },
         bizNumber: Math.floor(Math.random() * 10_000_000),
         user_id: user._id,

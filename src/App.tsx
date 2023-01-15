@@ -14,6 +14,7 @@ import { setToken } from "./auth/tokenMgmt";
 import { postRequest } from "./services/apiService";
 import { createContext, useState } from "react";
 import CreateCard from "./auth/CreateCard";
+import Edit from "./pages/Edit";
 
 interface ILoginData {
   email: string;
@@ -61,7 +62,9 @@ function App() {
 
   return (
     <div className="container">
-      <AppContext.Provider value={{ userId, userName, handleLogout, login, isBiz }}>
+      <AppContext.Provider
+        value={{ userId, userName, handleLogout, login, isBiz }}
+      >
         <Header />
         <ToastContainer />
         <Routes>
@@ -69,7 +72,12 @@ function App() {
             path="/bizcards"
             element={
               <RouteGuard>
-                <BizCards />
+                <BizCards
+                  userCards={false}
+                  title={"Business Card App"}
+                  subTitle={"Here you will find business cards"}
+                  includeSearch={true}
+                />
               </RouteGuard>
             }
           />
@@ -79,6 +87,14 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/login" element={<Login handler={login} />} />
           <Route path="/createcard" element={<CreateCard />} />
+          <Route
+            path="/edit/:id"
+            element={
+              <RouteGuard>
+                <Edit />
+              </RouteGuard>
+            }
+          />
         </Routes>
         <footer>
           <Footer />
