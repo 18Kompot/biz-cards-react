@@ -8,7 +8,9 @@ function User() {
   return (
     <>
       {context.userName.length === 0 ? null : (
-        <div>Hello {context.userName}</div>
+        <div className="text-center col-sm-2">
+          Logged in as: {context.userName}
+        </div>
       )}
     </>
   );

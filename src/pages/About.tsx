@@ -8,7 +8,7 @@ function About() {
         sub="Here you will find an explanation of how to interact with the app"
       />
 
-      <div className="container row align-items-center">
+      <div className="row align-items-center">
         <div className="col">
           <div className="card-body col-sm-10">
             <p className="card-text">

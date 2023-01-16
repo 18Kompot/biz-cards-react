@@ -91,9 +91,9 @@ function App() {
             }
           />
         </Routes>
-        <footer>
+        <div className="d-flex flex-column min-vh-100">
           <Footer />
-        </footer>
+        </div>
       </AppContext.Provider>
     </div>
   );

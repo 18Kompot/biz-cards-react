@@ -66,15 +66,12 @@ function Header() {
                         My Cards
                       </NavLink>
                     </li>
-                  ) : (<></>)}
+                  ) : (
+                    <></>
+                  )}
                   <li className="nav-item">
                     <NavLink className="nav-link" to="/myfavcards">
                       My Favorite Cards
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink className="nav-item nav-link" to="/createcard">
-                      Create Card
                     </NavLink>
                   </li>
                   <li className="nav-item">
