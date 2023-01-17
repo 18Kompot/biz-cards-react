@@ -24,7 +24,7 @@ function BizCards() {
     let resultCards: Array<ICardData> = cards;
     if (input !== "") {
       resultCards = cards.filter((card: ICardData) => {
-        return card.title.startsWith(input);
+        return card.title.toLowerCase().includes(input.toLowerCase());
       });
     }
     setShownCards(resultCards);

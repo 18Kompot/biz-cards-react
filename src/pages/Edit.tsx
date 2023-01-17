@@ -130,13 +130,22 @@ function Edit() {
           />
         </div>
 
-        <button onClick={handleClick} className="btn btn-info me-3">
-          Update
-        </button>
-
-        <Link to="/bizcards" className="btn btn-secondary">
-          Cancel
-        </Link>
+        <div className="d-grid gap-2 d-md-flex justify-content-md-start mt-4">
+          <Link to="/bizcards">
+            <button
+              onClick={handleClick}
+              className="btn btn-primary me-md-2"
+              type="button"
+            >
+              Update
+            </button>
+          </Link>
+          <Link to="/bizcards">
+            <button className="btn btn-primary" type="button">
+              Cancel
+            </button>
+          </Link>
+        </div>
       </div>
 
       {error && <div className="text-danger">{error}</div>}

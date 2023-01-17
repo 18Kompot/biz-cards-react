@@ -32,7 +32,7 @@ function MyCards() {
       <Title main="My Cards" sub="Here you will find your cards" />
       <Link to={`/createcard`}>
         <button type="button" className="btn btn-primary float-left m-2">
-          <i className="bi bi-plus-circle-fill"></i> Add Card
+          <i className="bi bi-plus-circle-fill m-1"></i> Add Card
         </button>
       </Link>
       <CardList cards={cards} />

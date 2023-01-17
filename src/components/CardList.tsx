@@ -49,7 +49,7 @@ function CardList(props: Props) {
       {shownCards.length === 0 ? (
         <div className="alert alert-info m-5">No cards</div>
       ) : (
-        <div className="row row-cols-3 row-cols-md-5 g-4">
+        <div className="row row-cols-3 row-cols-md-4 g-4">
           {shownCards.map((card) => (
             <div key={card._id} className="col">
               <div className="card h-100">
@@ -67,18 +67,20 @@ function CardList(props: Props) {
                     <>
                       <Link
                         to={`/edit/${card._id}`}
-                        className="btn btn-default"
+                        className="btn btn-secondary text-white m-2"
                       >
-                        <button className="bi-pen">Edit</button>
+                        <div className="bi-pen">Edit</div>
                       </Link>
-                      <Link to={""} className="btn btn-default">
-                        <button
-                          onClick={() => delCard(card)}
-                          className="bi-trash"
-                        >
+
+                      <Link to={""} className="btn btn-danger text-white">
+                        <div onClick={() => delCard(card)} className="bi-trash">
                           Delete
-                        </button>
+                        </div>
                       </Link>
+
+                      <div className="btn btn-transperent text-white m-2">
+                        <i className="bi bi-star text-dark"></i>
+                      </div>
                     </>
                   )}
                 </div>

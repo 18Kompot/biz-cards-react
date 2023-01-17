@@ -1,4 +1,3 @@
-
 interface Props {
   handleSearch: Function;
 }
@@ -12,7 +11,7 @@ function Search(props: Props) {
           <input
             type="text"
             onChange={(e) => {
-              props.handleSearch(e.target.value)
+              props.handleSearch(e.target.value);
             }}
             className="form-control"
             placeholder="Enter business name or number"

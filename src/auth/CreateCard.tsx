@@ -136,7 +136,7 @@ function CreateCard() {
             onChange={(e) => setImageUrl(e.target.value)}
           />
         </div>
-        <button onClick={submit} className="btn btn-primary mt-2">
+        <button onClick={submit} className="btn btn-primary mt-4">
           Create Card
         </button>
       </div>
