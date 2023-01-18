@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../App";
-import { ICardData } from "../pages/types";
-import { deleteRequest } from "../services/apiService";
+import { ICardData, IFavoriteCardData } from "../pages/types";
+import { deleteRequest, getRequest, postRequest } from "../services/apiService";
 
 interface Context {
   shownCards?: Array<ICardData>;
@@ -17,6 +17,7 @@ const CardsContext = createContext<Context>({});
 function CardList(props: Props) {
   // To retrieve the logged in user ID
   const context = useContext(AppContext);
+  const isLoggedIn = context && context.userName.length > 0;
   const userId = context && context.userId.length > 0 ? context.userId : "0";
 
   const [shownCards, setCards] = useState<Array<ICardData>>([]);
@@ -26,8 +27,30 @@ function CardList(props: Props) {
     let cards: Array<ICardData> = [];
     if (props.cards) {
       cards = props.cards;
+      cards.forEach((card: ICardData) => {
+        card.is_favorite = false;
+      });
     }
-    return setCards(cards);
+
+    if (!isLoggedIn) {
+      return setCards(cards);
+    }
+
+    const res = getRequest(`cards/user/${userId}/favorites`);
+    if (res) {
+      res
+        .then((response) => response.json())
+        .then((json) => {
+          json.forEach(async (favoriteCard: ICardData) => {
+            cards.forEach(async (card) => {
+              if (favoriteCard._id == card._id) {
+                card.is_favorite = true;
+              }
+            });
+          });
+          setCards(cards);
+      });
+    }
   }
 
   function delCard(card: ICardData) {
@@ -42,6 +65,41 @@ function CardList(props: Props) {
         );
         setCards(updated);
       });
+  }
+
+  function toggleFavorite(card: ICardData) {
+    card.is_favorite = !card.is_favorite;
+
+    // The card was unfavorited.
+    if (!card.is_favorite) {
+      const res = deleteRequest(`cards/user/${userId}/favorites/${card._id}`);
+      if (!res) {
+        return;
+      }
+
+      res
+        .then((response) => response.json())
+        .then((json) => {
+          setCards([...shownCards]);
+        });
+    }
+
+    // The card was favorited.
+    else {
+      const res = postRequest(`cards/user/${userId}/favorites/${card._id}`, {
+        "circus": "http://www.gingl.at/musikagentur/wp-content/uploads/Clown1.jpg"
+      }, false);
+
+      if (!res) {
+        return;
+      }
+
+      res
+        .then((response) => response.json())
+        .then((json) => {
+          setCards([...shownCards]);
+        });
+    }
   }
 
   return (
@@ -69,18 +127,27 @@ function CardList(props: Props) {
                         to={`/edit/${card._id}`}
                         className="btn btn-secondary text-white m-2"
                       >
-                        <div className="bi-pen">Edit</div>
+                        <span className="px-1 bi-pen"></span>
+                        Edit
                       </Link>
 
                       <Link to={""} className="btn btn-danger text-white">
-                        <div onClick={() => delCard(card)} className="bi-trash">
+                        <div onClick={() => delCard(card)}>
+                          <span className="px-1 bi-trash"></span>
                           Delete
                         </div>
                       </Link>
 
-                      <div className="btn btn-transperent text-white m-2">
-                        <i className="bi bi-star text-dark"></i>
-                      </div>
+                      <Link to={`/about/${card._id}`} className="btn btn-secondary text-white">
+                        <span className="px-1 bi-info-circle"></span>
+                        About
+                      </Link>
+
+                      {isLoggedIn ? (
+                        <div onClick={() => toggleFavorite(card)} className="btn btn-transparent text-white m-2">
+                          <i className={`px-1 bi ${card.is_favorite ? "bi-star-fill" : "bi-star" } text-dark`}></i>
+                        </div>
+                      ) : (<></>)}
                     </>
                   )}
                 </div>

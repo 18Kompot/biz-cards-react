@@ -6,6 +6,7 @@ import Signup from "./auth/Signup";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import About from "./pages/About";
+import AboutCard from "./pages/Cards/AboutCard";
 import BizCards from "./pages/Cards/BizCards";
 import MyCards from "./pages/Cards/MyCards";
 import MyFavCards from "./pages/Cards/MyFavCards";
@@ -77,6 +78,7 @@ function App() {
             }
           />
           <Route path="/about" element={<About />} />
+          <Route path="/about/:id" element={<AboutCard />} />
           <Route path="/mycards" element={<MyCards />} />
           <Route path="/myfavcards" element={<MyFavCards />} />
           <Route path="/signup" element={<Signup />} />

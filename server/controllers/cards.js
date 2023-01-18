@@ -1,6 +1,7 @@
 const joi = require("joi");
 const { User } = require("../models/User");
 const { Card } = require("../models/Card");
+const { FavoriteCard } = require("../models/FavoriteCard");
 
 // ========================================================================== //
 //
@@ -241,4 +242,64 @@ module.exports = {
       result.status(400).json({ error: `${err}` });
     }
   },
+
+  favoriteCards: async function(request, result, next) {
+    try {
+      // An empty find returns the complete set.
+      const dataSet = await FavoriteCard.find({ user_id: request.params.id });
+
+      let cardSet = [];
+      for (entry of dataSet) {
+        const card = await Card.findById(entry.card_id);
+        cardSet.push(card);
+      }
+
+      // Propogate the result back via result.
+      result.json(cardSet);
+    } catch (err) {
+      logError(err);
+      result.status(400).json({ error: `${err}` });
+    }
+  },
+
+  addFavorite: async function(request, result, next) {
+    try {
+      const userId = request.params.user_id;
+      const cardId = request.params.card_id;
+
+      const exists = await FavoriteCard.findOne({ 
+        user_id: userId, 
+        card_id: cardId 
+      });
+
+      if (exists) {
+        throw new Error(`Card is already a favorite.`);
+      }
+
+      const favorite = new FavoriteCard({
+        user_id: userId,
+        card_id: cardId
+      });
+      await favorite.save();
+      result.json(favorite);
+    } catch (err) {
+      logError(err);
+      result.status(400).json({ error: `${err}` });
+    }
+  },
+
+  deleteFavorite: async function(request, result, next) {
+    try {
+      const favoriteCard = FavoriteCard.findOne({ card_id: request.params.card_id });
+      if (!favoriteCard) {
+        throw new Error(`Card is not a favorite.`);
+      }
+
+      const deletedCard = await favoriteCard.deleteOne();
+      result.json(deletedCard);
+    } catch (err) {
+      logError(err);
+      result.status(400).json({ error: `${err}` });
+    }
+  }
 };

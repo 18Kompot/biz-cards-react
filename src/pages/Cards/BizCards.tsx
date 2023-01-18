@@ -12,6 +12,7 @@ function BizCards() {
   function getCards() {
     const res = getRequest("cards");
     if (!res) return;
+    
     res
       .then((response) => response.json())
       .then((json) => {

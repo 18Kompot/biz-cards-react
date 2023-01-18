@@ -47,7 +47,7 @@ const cardSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
-    },
+    }
 });
 
 const Card = mongoose.model("card", cardSchema);
