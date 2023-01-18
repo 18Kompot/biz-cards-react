@@ -181,7 +181,19 @@ module.exports = {
         _id: request.params.id,
         userID: user._id,
       };
-      const card = await Card.findOneAndUpdate(filter, value);
+
+      const updatedCard = {
+        title: value.title,
+        subTitle: value.subTitle,
+        address: value.address,
+        phone: value.phone,
+        image: {
+          url: value.url,
+          alt: value.alt
+        }
+      };
+
+      const card = await Card.findOneAndUpdate(filter, updatedCard);
       if (!card) {
         throw new Error(`Failed to update card.`);
       }
