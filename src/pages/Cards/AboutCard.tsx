@@ -12,8 +12,8 @@ function About() {
   const [phone, setPhone] = useState<string>("");
   const [url, setImageUrl] = useState<string>("");
   const [alt, setImageAlt] = useState<string>("");
-  const [bizNumber, setBizNumber] = useState<string>(""); 
-  const [error, setError] = useState<string>("");
+  const [bizNumber, setBizNumber] = useState<string>("");
+  // const [error, setError] = useState<string>("");
 
   useEffect(() => {
     const res = getRequest(`cards/${id}`);
@@ -38,10 +38,7 @@ function About() {
 
   return (
     <>
-      <Title
-        main={ title }
-        sub={ subTitle }
-      />
+      <Title main={title} sub={subTitle} />
 
       <div className="row align-items-center">
         <div className="col">
@@ -59,19 +56,19 @@ function About() {
         </div>
         <div className="card col-sm-4">
           <img
-            src={ url }
-            className="card-img-top p-2"
-            alt={ alt }
+            src={url}
+            className="card-img-top img-thumbnail mt-2"
+            alt={alt}
           />
           <div className="card-body">
-            <h6>{ title }</h6>
-            <p className="card-text">Business Card Description</p>
+            <h6>{title}</h6>
+            <p className="card-text">{subTitle}</p>
             <hr></hr>
-            <b>Tel:</b> { phone }
+            <b>Tel:</b> {phone}
             <br />
-            <b>Address:</b> { address }
+            <b>Address:</b> {address}
             <br />
-            <b>Card Number:</b> { bizNumber} 
+            <b>Card Number:</b> {bizNumber}
           </div>
         </div>
       </div>

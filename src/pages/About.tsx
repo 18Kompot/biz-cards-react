@@ -25,7 +25,7 @@ function About() {
         <div className="card col-sm-4">
           <img
             src="https://cdn.pixabay.com/photo/2016/12/13/21/16/new-years-eve-1905144_960_720.jpg"
-            className="card-img-top p-2"
+            className="card-img-top img-thumbnail mt-2"
             alt="champagne"
           />
           <div className="card-body">
