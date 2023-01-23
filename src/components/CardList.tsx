@@ -1,7 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AppContext } from "../App";
-import { ICardData, IFavoriteCardData } from "../pages/types";
+import { ICardData } from "../pages/types";
 import { deleteRequest, getRequest, postRequest } from "../services/apiService";
 
 interface Context {
@@ -43,13 +43,13 @@ function CardList(props: Props) {
         .then((json) => {
           json.forEach(async (favoriteCard: ICardData) => {
             cards.forEach(async (card) => {
-              if (favoriteCard._id == card._id) {
+              if (favoriteCard._id === card._id) {
                 card.is_favorite = true;
               }
             });
           });
           setCards(cards);
-      });
+        });
     }
   }
 
@@ -86,9 +86,14 @@ function CardList(props: Props) {
 
     // The card was favorited.
     else {
-      const res = postRequest(`cards/user/${userId}/favorites/${card._id}`, {
-        "circus": "http://www.gingl.at/musikagentur/wp-content/uploads/Clown1.jpg"
-      }, false);
+      const res = postRequest(
+        `cards/user/${userId}/favorites/${card._id}`,
+        {
+          circus:
+            "http://www.gingl.at/musikagentur/wp-content/uploads/Clown1.jpg",
+        },
+        false
+      );
 
       if (!res) {
         return;
@@ -123,31 +128,42 @@ function CardList(props: Props) {
                   <p className="card-text">Phone: {card.phone}</p>
                   {card.user_id === userId && (
                     <>
-                      <Link
-                        to={`/edit/${card._id}`}
-                        className="btn btn-secondary text-white m-2"
-                      >
-                        <span className="px-1 bi-pen"></span>
-                        Edit
-                      </Link>
+                      <div className="col">
+                        <Link
+                          to={`/edit/${card._id}`}
+                          className="btn btn-secondary text-white m-1"
+                        >
+                          <span className="px-1 bi-pen"></span>
+                        </Link>
 
-                      <Link to={""} className="btn btn-danger text-white">
-                        <div onClick={() => delCard(card)}>
-                          <span className="px-1 bi-trash"></span>
-                          Delete
-                        </div>
-                      </Link>
+                        <Link to={""} className="btn btn-danger text-white">
+                          <div onClick={() => delCard(card)}>
+                            <span className="px-1 bi-trash"></span>
+                          </div>
+                        </Link>
 
-                      <Link to={`/about/${card._id}`} className="btn btn-secondary text-white">
-                        <span className="px-1 bi-info-circle"></span>
-                        About
-                      </Link>
+                        <Link
+                          to={`/about/${card._id}`}
+                          className="btn btn-secondary text-white m-1"
+                        >
+                          <span className="px-1 bi-info-circle"></span>
+                        </Link>
 
-                      {isLoggedIn ? (
-                        <div onClick={() => toggleFavorite(card)} className="btn btn-transparent text-white m-2">
-                          <i className={`px-1 bi ${card.is_favorite ? "bi-star-fill" : "bi-star" } text-dark`}></i>
-                        </div>
-                      ) : (<></>)}
+                        {isLoggedIn ? (
+                          <div
+                            onClick={() => toggleFavorite(card)}
+                            className="btn btn-transparent text-white m-1"
+                          >
+                            <i
+                              className={`px-1 bi ${
+                                card.is_favorite ? "bi-star-fill" : "bi-star"
+                              } text-dark`}
+                            ></i>
+                          </div>
+                        ) : (
+                          <></>
+                        )}
+                      </div>
                     </>
                   )}
                 </div>
