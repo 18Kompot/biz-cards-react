@@ -290,7 +290,11 @@ module.exports = {
 
   deleteFavorite: async function(request, result, next) {
     try {
-      const favoriteCard = FavoriteCard.findOne({ card_id: request.params.card_id });
+      const favoriteCard = FavoriteCard.findOne({
+        user_id: request.params.user_id, 
+        card_id: request.params.card_id 
+      });
+      
       if (!favoriteCard) {
         throw new Error(`Card is not a favorite.`);
       }
